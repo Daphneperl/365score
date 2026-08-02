@@ -775,14 +775,209 @@ main.center-step {
 .is-locked .btn-secondary,
 .is-locked .chip,
 .is-locked .league-badge,
-.is-locked .team-badge {
+.is-locked .team-badge,
+.is-locked .save-dock .btn-primary {
   pointer-events: none;
   opacity: 0.7;
 }
 
 /* ---------- Reveal / matchday feed ---------- */
 
-.reveal { position: relative; }
+.reveal {
+  position: relative;
+  padding-bottom: 72px;
+}
+
+/* Sticky CTA on the final feed — mirrors the progress dock shell. */
+.save-dock {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  display: flex;
+  justify-content: center;
+  padding: 14px 24px calc(14px + env(safe-area-inset-bottom));
+  background: linear-gradient(to top, var(--surface) 55%, transparent);
+  pointer-events: none;
+}
+
+.save-dock[hidden] {
+  display: none !important;
+}
+
+.save-dock .btn-primary {
+  width: auto;
+  min-width: 200px;
+  max-width: min(100%, 320px);
+  padding: 14px 28px;
+  border-radius: 999px;
+  pointer-events: auto;
+  flex: none;
+  box-shadow:
+    0 0 0 1px rgba(33, 148, 255, 0.35),
+    0 0 18px rgba(33, 148, 255, 0.35),
+    0 8px 20px rgba(0, 0, 0, 0.28);
+  transition:
+    transform var(--anim-fast) var(--ease),
+    box-shadow var(--anim-fast) var(--ease),
+    filter var(--anim-fast) var(--ease),
+    opacity var(--anim-fast) var(--ease);
+}
+
+.save-dock .btn-primary:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow:
+    0 0 0 1px rgba(33, 148, 255, 0.5),
+    0 0 28px rgba(33, 148, 255, 0.5),
+    0 10px 24px rgba(0, 0, 0, 0.32);
+}
+
+.save-dock .btn-primary:active {
+  transform: translateY(0) scale(0.98);
+  filter: brightness(1);
+}
+
+/* ---------- Save preferences popup ---------- */
+
+.save-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(12px, env(safe-area-inset-top)) 16px
+    max(12px, env(safe-area-inset-bottom));
+  box-sizing: border-box;
+  background: rgba(5, 7, 11, 0.62);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 1;
+  transition: opacity 500ms ease;
+  overflow: hidden;
+}
+
+.save-modal[hidden] {
+  display: none !important;
+}
+
+.save-modal.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.save-modal-panel {
+  box-sizing: border-box;
+  width: min(100%, 340px);
+  max-height: min(92dvh, 640px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  padding: clamp(16px, 4vh, 28px) clamp(16px, 4vw, 22px);
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--border);
+  background-color: var(--surface);
+  background-image: var(--surface-glow);
+  background-repeat: no-repeat;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
+  animation: savePop var(--anim) var(--ease);
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@keyframes savePop {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.save-title {
+  width: 100%;
+  margin: 0;
+  font-size: clamp(20px, 5.5vw, 28px);
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.save-subtitle {
+  width: 100%;
+  margin: 0;
+  color: var(--text-dim);
+  font-size: clamp(13px, 3.6vw, 16px);
+  line-height: 1.35;
+  max-width: 280px;
+  text-align: center;
+}
+
+.email-field {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  width: 100%;
+  max-width: 100%;
+  text-align: left;
+  margin: 4px 0;
+  box-sizing: border-box;
+}
+
+.email-label {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-dim);
+}
+
+.email-field input {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-elevated);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  padding: 12px 14px;
+  outline: none;
+  transition: border-color var(--anim-fast) var(--ease);
+  box-sizing: border-box;
+}
+
+.email-field input::placeholder {
+  color: var(--text-dim);
+  opacity: 0.8;
+}
+
+.email-field input:focus {
+  border-color: var(--accent);
+}
+
+.email-field input:disabled {
+  opacity: 0.65;
+}
+
+.save-modal .btn-primary {
+  width: 100%;
+  flex: none;
+}
+
+@media (prefers-color-scheme: light) {
+  .save-modal {
+    background: rgba(243, 243, 243, 0.72);
+  }
+}
 
 .feed-title {
   font-size: clamp(22px, 6vw, 28px);

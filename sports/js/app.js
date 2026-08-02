@@ -46,7 +46,8 @@
     selectedSports: new Set(),
     selectedLeagues: new Set(),
     selectedTeams: new Set(),
-    locked: false
+    locked: false,
+    prefsSaved: false
   };
 
   var $ = function (id) { return document.getElementById(id); };
@@ -205,9 +206,9 @@
 
   function preloadSport(sport) {
     sport.leagues.forEach(function (league) {
-      schedulePreload(function () { fetchLeagueBadge(league, sport.id); });
+      schedulePreload(function () { fetchLeagueBadge(league, sport.id).then(warmImage); });
       league.teams.forEach(function (team) {
-        schedulePreload(function () { fetchTeamBadge(team); });
+        schedulePreload(function () { fetchTeamBadge(team).then(warmImage); });
       });
     });
   }
@@ -809,6 +810,72 @@
       .catch(function () { /* leave panel hidden — this is enrichment, not a dependency */ });
   }
 
+  /* ---------------- save preferences modal ---------------- */
+
+  function emailReady() {
+    var input = $("emailInput");
+    return !!(input && input.value.trim().length >= 1);
+  }
+
+  function syncSaveEnabled() {
+    var btn = $("savePrefsBtn");
+    if (!btn || state.prefsSaved) return;
+    btn.disabled = !emailReady() || state.locked;
+  }
+
+  function resetSaveModal() {
+    var input = $("emailInput");
+    var btn = $("savePrefsBtn");
+    if (input) {
+      input.value = "";
+      input.disabled = false;
+    }
+    if (btn) {
+      btn.textContent = "Save preferences";
+      btn.disabled = true;
+    }
+    state.prefsSaved = false;
+    var dock = $("saveDock");
+    if (dock) dock.hidden = false;
+  }
+
+  function showSaveModal() {
+    var modal = $("saveModal");
+    var panel = modal.querySelector(".save-modal-panel");
+    var input = $("emailInput");
+    if (input) {
+      input.value = "";
+      input.disabled = false;
+    }
+    $("savePrefsBtn").disabled = true;
+    modal.classList.remove("is-hidden");
+    modal.hidden = false;
+    if (panel) {
+      panel.style.animation = "none";
+      void panel.offsetWidth;
+      panel.style.animation = "";
+    }
+    setTimeout(function () {
+      if (input && !input.disabled) input.focus();
+    }, 40);
+  }
+
+  function savePreferences() {
+    if (state.prefsSaved || state.locked || !emailReady()) return;
+
+    // Email is only checked client-side (≥1 char). Nothing is stored or sent.
+    state.prefsSaved = true;
+    var input = $("emailInput");
+    var btn = $("savePrefsBtn");
+    if (input) input.disabled = true;
+    if (btn) btn.disabled = true;
+    pushDataLayer("preferences_saved");
+    fadeOverlayOut($("saveModal"), function () {
+      var dock = $("saveDock");
+      if (dock) dock.hidden = true;
+    });
+  }
+
   /* ---------------- static control wiring (runs once) ---------------- */
 
   function wireStaticControls() {
@@ -853,9 +920,34 @@
       state.selectedSports.clear();
       state.selectedLeagues.clear();
       state.selectedTeams.clear();
+      resetSaveModal();
+      var modal = $("saveModal");
+      if (modal && !modal.hidden) {
+        modal.classList.add("is-hidden");
+        modal.hidden = true;
+      }
       renderSportsStep();
       goToStep("step-reveal", "step-sports", 25);
     }));
+
+    $("openSaveModal").addEventListener("click", safeClick(function () {
+      if (state.prefsSaved) return;
+      showSaveModal();
+    }));
+
+    var email = $("emailInput");
+    email.addEventListener("input", syncSaveEnabled);
+    email.addEventListener("keydown", function (evt) {
+      if (evt.key === "Enter") {
+        evt.preventDefault();
+        savePreferences();
+      }
+    });
+
+    $("savePrefsBtn").addEventListener("click", function (evt) {
+      evt.preventDefault();
+      savePreferences();
+    });
   }
 
   document.addEventListener("DOMContentLoaded", init);

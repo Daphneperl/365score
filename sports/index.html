@@ -9,9 +9,36 @@
 <title>365Scores — Build Your Matchday</title>
 <link rel="preload" href="data/config.json" as="fetch" crossorigin="anonymous">
 <link rel="preconnect" href="https://res.365scores.com" crossorigin>
-<link rel="stylesheet" href="css/style.css?v=32">
+<link rel="stylesheet" href="css/style.css?v=34">
 </head>
 <body>
+
+<div id="saveModal" class="save-modal" hidden>
+  <div
+    class="save-modal-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="saveTitle"
+  >
+    <h2 class="save-title" id="saveTitle">Save your preferences</h2>
+    <p class="save-subtitle" id="saveSubtitle">Enter your email to save your matchday feed.</p>
+
+    <label class="email-field" for="emailInput">
+      <span class="email-label" id="emailLabel">Email</span>
+      <input
+        type="email"
+        id="emailInput"
+        name="email"
+        autocomplete="off"
+        inputmode="email"
+        spellcheck="false"
+        placeholder="type anything"
+      />
+    </label>
+
+    <button type="button" class="btn-primary" id="savePrefsBtn" disabled>Save preferences</button>
+  </div>
+</div>
 
 <header class="brand-header">
   <span class="brand">365<span class="accent">SPORTS</span></span>
@@ -95,6 +122,10 @@
       <div class="fixture-list" id="fixtureList"></div>
 
       <button class="btn-text" id="startOver">Start over</button>
+
+      <div class="save-dock" id="saveDock">
+        <button type="button" class="btn-primary" id="openSaveModal">Save preferences</button>
+      </div>
     </section>
 
     <div class="progress-dock" id="progressDock">
@@ -110,6 +141,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
-<script src="js/app.js?v=26" defer></script>
+<script src="js/app.js?v=27" defer></script>
 </body>
 </html>
