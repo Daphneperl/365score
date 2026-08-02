@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#000000">
+<meta name="description" content="Build your personalized 365Scores matchday feed in three taps.">
+<title>365Scores — Build Your Matchday</title>
+<link rel="preload" href="data/config.json" as="fetch" crossorigin="anonymous">
+<link rel="preconnect" href="https://res.365scores.com" crossorigin>
+<link rel="stylesheet" href="css/style.css?v=32">
+</head>
+<body>
+
+<header class="brand-header">
+  <span class="brand">365<span class="accent">SPORTS</span></span>
+</header>
+
+<div id="app">
+
+  <!-- Surface cover: fades out on boot to reveal the intro underneath. -->
+  <div id="pageFade" class="page-fade" aria-hidden="true"></div>
+
+  <!-- Title overlay: the only place the headline/subhead appear. Covers the
+       page until tap (waits on config too) then fades to reveal step 1,
+       already built and waiting underneath. -->
+  <div id="introOverlay" class="intro-overlay" role="status" aria-live="polite" tabindex="0">
+    <h1 id="headline"></h1>
+    <p id="subheadline"></p>
+    <span class="intro-tap-hint">Tap to continue</span>
+  </div>
+
+  <!-- Shown after "Build My Feed" for a fixed beat, then fades into the reveal. -->
+  <div id="buildingOverlay" class="intro-overlay building-overlay" hidden role="status" aria-live="polite" aria-busy="true">
+    <h1>Making it yours</h1>
+    <p>Pulling in your teams</p>
+    <div class="feed-loader" aria-hidden="true">
+      <div class="wave top-wave">
+        <div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div>
+      </div>
+      <div class="wave bottom-wave">
+        <div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main interactive flow (built while the intro overlay is up, revealed
+       when it fades) -->
+  <main id="main" hidden>
+
+    <section class="step" id="step-sports" data-step="1">
+      <h2><span class="step-num">1</span> Pick your sports</h2>
+      <div class="chip-grid" id="sportsGrid"></div>
+      <div class="step-actions single">
+        <button class="btn-primary" id="toStep2" disabled>Next</button>
+      </div>
+    </section>
+
+    <section class="step" id="step-leagues" data-step="2" hidden>
+      <h2><span class="step-num">2</span> Pick your leagues</h2>
+      <div class="grouped-list" id="leaguesGrid"></div>
+      <div class="step-actions">
+        <button class="btn-secondary" id="backTo1">Back</button>
+        <button class="btn-primary" id="toStep3" disabled>Next</button>
+      </div>
+    </section>
+
+    <section class="step" id="step-teams" data-step="3" hidden>
+      <h2><span class="step-num">3</span> Pick your teams</h2>
+      <p class="hint"><span id="teamCount">0</span> teams selected — tap a badge to favorite it</p>
+      <div class="grouped-list" id="teamsGrid"></div>
+      <div class="step-actions">
+        <button class="btn-secondary" id="backTo2">Back</button>
+        <button class="btn-primary" id="toReveal" disabled>Build My Feed</button>
+      </div>
+    </section>
+
+    <section class="step reveal" id="step-reveal" data-step="4" hidden>
+      <!-- Populated live from TheSportsDB's public API when a picked team
+           has a match today. Stays empty/hidden if the API has nothing or
+           the request fails — the page never depends on it. -->
+      <div class="live-panel" id="livePanel" hidden>
+        <h3><span class="live-dot" aria-hidden="true"></span>Live right now</h3>
+        <div class="fixture-list" id="liveList"></div>
+      </div>
+
+      <h2 class="feed-title">Your Matchday Feed</h2>
+      <div class="fixture-list" id="fixtureList"></div>
+
+      <button class="btn-text" id="startOver">Start over</button>
+    </section>
+
+    <div class="progress-dock" id="progressDock">
+      <div class="progress" id="progress" aria-hidden="true">
+        <span class="progress-seg"></span>
+        <span class="progress-seg"></span>
+        <span class="progress-seg"></span>
+        <span class="progress-seg"></span>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
+<script src="js/app.js?v=26" defer></script>
+</body>
+</html>

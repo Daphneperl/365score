@@ -1,0 +1,961 @@
+/* ==========================================================================
+   365Scores — Build Your Matchday
+   Pure CSS, mobile-first. Base rules target ~375-430px; min-width queries
+   layer on enhancements for larger viewports. GPU-friendly transforms/
+   opacity-only animation. Tokens reconciled from the live 365scores.com
+   design system (light/dark custom properties) + real product screenshots.
+   ========================================================================== */
+
+@font-face {
+  font-family: '365 Sans';
+  src: url('https://res.365scores.com/fonts/365_Sans_Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: '365 Sans';
+  src: url('https://res.365scores.com/fonts/365_Sans_Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: '365 Sans';
+  src: url('https://res.365scores.com/fonts/365_Sans_DemiBold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* -- color: dark (primary) -- */
+  --header-bg: #000000;
+  --surface: #05070b;
+  --surface-elevated: rgba(255, 255, 255, .045);
+  --border: rgba(255, 255, 255, .1);
+  --text: #ffffff;
+  --text-dim: #9da0a2;
+  --accent: #2194ff;
+  --accent-wash: rgba(33, 148, 255, .12);
+  --danger: #ff495c;
+  --glass-blur: blur(10px); /* kept modest — backdrop-filter is GPU-costly, and this repeats across every card */
+
+  /* -- type -- */
+  --font-body: '365 Sans', Roboto, Heebo, -apple-system, BlinkMacSystemFont, sans-serif;
+  --fs-2xs: 11px;
+  --fs-xs: 12px;
+  --fs-sm: 13px;
+  --fs-base: 14px;
+  --fs-md: 16px;
+  --fs-lg: 20px;
+  --fs-xl: 32px;
+
+  /* -- shape / motion -- */
+  --radius-sm: 3px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --anim-fast: 160ms;
+  --anim: 320ms;
+  --ease: cubic-bezier(.22, .9, .34, 1);
+  --max-w: 480px;
+
+  /* Moody navy glow + faint crossing hairlines, easing the flat black into
+     something with depth — off in light mode, where it would fight the
+     airy surface instead. */
+  --surface-glow:
+    radial-gradient(120% 55% at 50% 0%, rgba(33, 148, 255, .22), transparent 60%),
+    radial-gradient(90% 45% at 90% 100%, rgba(33, 148, 255, .1), transparent 55%),
+    repeating-linear-gradient(115deg, rgba(255, 255, 255, .025) 0px, rgba(255, 255, 255, .025) 1px, transparent 1px, transparent 140px),
+    repeating-linear-gradient(25deg, rgba(255, 255, 255, .02) 0px, rgba(255, 255, 255, .02) 1px, transparent 1px, transparent 160px);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --surface: #f3f3f3;
+    --surface-elevated: #ffffff;
+    --border: #ced0d0;
+    --text: #151e22;
+    --text-dim: #6b7173;
+    --accent-wash: rgba(33, 148, 255, .1);
+    --surface-glow: none;
+    --glass-blur: none;
+    /* header stays pure black in both themes — it's brand chrome, not surface */
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--surface);
+  background-image: var(--surface-glow);
+  background-repeat: no-repeat;
+  /* Locks the gradient to the viewport instead of the full scrollable page
+     height. Needed so it lines up pixel-for-pixel with the intro overlay's
+     identical, viewport-fixed copy of the same gradient below — without
+     this they're sized differently once page content exceeds one screen,
+     which is what caused the "extra layer" glitch during the fade. */
+  background-attachment: fixed;
+  color: var(--text);
+}
+
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3, p { margin: 0; }
+
+button {
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#app {
+  width: 100%;
+  flex: 1;
+  position: relative;
+}
+
+/* Surface-backed cover — fades out to reveal the intro (avoids gray opacity wash). */
+.page-fade {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  background-color: var(--surface);
+  background-image: var(--surface-glow);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 700ms ease-in-out;
+}
+
+.page-fade[hidden] {
+  display: none !important;
+}
+
+.page-fade.is-hidden {
+  opacity: 0;
+}
+
+/* ---------- Title overlay ---------- */
+/* The only place the headline/subhead render — each step used to repeat
+   them, which meant re-reading the same two lines three times on the way
+   through onboarding. Now they're said once, up front, then this covers
+   nothing but itself: step 1 is already built underneath by the time this
+   fades, so there's no loading state to represent visually beyond the fade
+   itself — no spinner, matching the reference. */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+  padding: 24px;
+  /* Same background as the stages underneath — background-attachment:fixed
+     on html/body (see above) keeps this pixel-identical to it rather than
+     sized to the full scrollable page, which is what caused the earlier
+     "extra layer" glitch during the fade. */
+  background-color: var(--surface);
+  background-image: var(--surface-glow);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  z-index: 100;
+  opacity: 1;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 700ms ease-in-out;
+}
+
+/* Author `display:flex` above beats the UA `[hidden]` rule — keep hidden
+   overlays fully out of the tree until JS removes the attribute. */
+.intro-overlay[hidden] {
+  display: none !important;
+}
+
+.intro-overlay:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
+
+.intro-overlay.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro-tap-hint {
+  position: absolute;
+  bottom: 32px;
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+.intro-overlay h1 {
+  font-size: clamp(26px, 8vw, 36px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.3px;
+  max-width: 340px;
+}
+
+.intro-overlay p {
+  color: var(--text-dim);
+  font-size: var(--fs-md);
+  line-height: 1.4;
+  max-width: 300px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-fade,
+  .intro-overlay { transition-duration: .001ms; }
+}
+
+/* Building-feed overlay: same shell as intro, plus the wave loader. */
+.building-overlay {
+  cursor: default;
+  z-index: 110;
+  gap: 12px;
+}
+
+.building-overlay .feed-loader {
+  display: flex;
+  position: relative;
+  width: 240px;
+  height: 60px;
+  margin-top: 28px;
+  opacity: 0;
+  transition: opacity 700ms ease;
+}
+
+.building-overlay .feed-loader.is-visible {
+  opacity: 1;
+}
+
+.building-overlay .wave {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  perspective: 100px;
+}
+
+.building-overlay .wave > div {
+  position: relative;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.building-overlay .wave > div::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--text);
+  border-radius: 50%;
+}
+
+.building-overlay .top-wave > div {
+  animation: feed-wave-move 2s ease-in-out infinite reverse;
+}
+
+.building-overlay .top-wave > div::before {
+  animation: feed-wave-grow 2s linear infinite reverse;
+}
+
+.building-overlay .bottom-wave > div {
+  animation: feed-wave-move 2s ease-in-out infinite;
+}
+
+.building-overlay .bottom-wave > div::before {
+  animation: feed-wave-grow 2s linear infinite;
+}
+
+.building-overlay .wave > div:nth-child(20) { animation-delay: 0s; }
+.building-overlay .wave > div:nth-child(19) { animation-delay: -0.1s; }
+.building-overlay .wave > div:nth-child(18) { animation-delay: -0.2s; }
+.building-overlay .wave > div:nth-child(17) { animation-delay: -0.3s; }
+.building-overlay .wave > div:nth-child(16) { animation-delay: -0.4s; }
+.building-overlay .wave > div:nth-child(15) { animation-delay: -0.5s; }
+.building-overlay .wave > div:nth-child(14) { animation-delay: -0.6s; }
+.building-overlay .wave > div:nth-child(13) { animation-delay: -0.7s; }
+.building-overlay .wave > div:nth-child(12) { animation-delay: -0.8s; }
+.building-overlay .wave > div:nth-child(11) { animation-delay: -0.9s; }
+.building-overlay .wave > div:nth-child(10) { animation-delay: 0s; }
+.building-overlay .wave > div:nth-child(9)  { animation-delay: -0.1s; }
+.building-overlay .wave > div:nth-child(8)  { animation-delay: -0.2s; }
+.building-overlay .wave > div:nth-child(7)  { animation-delay: -0.3s; }
+.building-overlay .wave > div:nth-child(6)  { animation-delay: -0.4s; }
+.building-overlay .wave > div:nth-child(5)  { animation-delay: -0.5s; }
+.building-overlay .wave > div:nth-child(4)  { animation-delay: -0.6s; }
+.building-overlay .wave > div:nth-child(3)  { animation-delay: -0.7s; }
+.building-overlay .wave > div:nth-child(2)  { animation-delay: -0.8s; }
+.building-overlay .wave > div:nth-child(1)  { animation-delay: -0.9s; }
+
+.building-overlay .bottom-wave > div:nth-child(20) { animation-delay: 1s; }
+.building-overlay .bottom-wave > div:nth-child(19) { animation-delay: 0.9s; }
+.building-overlay .bottom-wave > div:nth-child(18) { animation-delay: 0.8s; }
+.building-overlay .bottom-wave > div:nth-child(17) { animation-delay: 0.7s; }
+.building-overlay .bottom-wave > div:nth-child(16) { animation-delay: 0.6s; }
+.building-overlay .bottom-wave > div:nth-child(15) { animation-delay: 0.5s; }
+.building-overlay .bottom-wave > div:nth-child(14) { animation-delay: 0.4s; }
+.building-overlay .bottom-wave > div:nth-child(13) { animation-delay: 0.3s; }
+.building-overlay .bottom-wave > div:nth-child(12) { animation-delay: 0.2s; }
+.building-overlay .bottom-wave > div:nth-child(11) { animation-delay: 0.1s; }
+.building-overlay .bottom-wave > div:nth-child(10) { animation-delay: 1s; }
+.building-overlay .bottom-wave > div:nth-child(9)  { animation-delay: 0.9s; }
+.building-overlay .bottom-wave > div:nth-child(8)  { animation-delay: 0.8s; }
+.building-overlay .bottom-wave > div:nth-child(7)  { animation-delay: 0.7s; }
+.building-overlay .bottom-wave > div:nth-child(6)  { animation-delay: 0.6s; }
+.building-overlay .bottom-wave > div:nth-child(5)  { animation-delay: 0.5s; }
+.building-overlay .bottom-wave > div:nth-child(4)  { animation-delay: 0.4s; }
+.building-overlay .bottom-wave > div:nth-child(3)  { animation-delay: 0.3s; }
+.building-overlay .bottom-wave > div:nth-child(2)  { animation-delay: 0.2s; }
+.building-overlay .bottom-wave > div:nth-child(1)  { animation-delay: 0.1s; }
+
+@keyframes feed-wave-move {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(60px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes feed-wave-grow {
+  0%, 100% {
+    transform: scaleX(1) scaleY(1);
+  }
+  25% {
+    transform: scaleX(2) scaleY(2);
+    z-index: 2;
+  }
+  50% {
+    transform: scaleX(1) scaleY(1);
+  }
+  75% {
+    transform: scaleX(0.5) scaleY(0.5);
+    z-index: -2;
+  }
+}
+
+/* ---------- Brand header ---------- */
+/* Always pure black regardless of theme — matches the real product's fixed
+   brand chrome. No sport tabs here: this flow already picks a sport one
+   screen down via the step-1 chips, so a second sport switcher here would
+   just duplicate that choice rather than mean anything of its own. */
+
+.brand-header {
+  position: sticky;
+  top: 0;
+  z-index: 130;
+  width: 100%;
+  background: var(--header-bg);
+  padding: 14px 16px;
+}
+
+.brand-header .brand {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.brand-header .brand .accent { color: var(--accent); }
+
+/* ---------- Layout ---------- */
+
+main {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 16px 24px 96px;
+}
+
+/* Steps 1-3: the hero + active step form one block, vertically centered
+   with equal space above and below (not just top-anchored under the hero).
+   The feed step opts out — it's long-form, scrollable content. */
+main.center-step {
+  min-height: calc(100dvh - 47px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Fixed dock at the bottom of the viewport — not the page, so it stays put
+   through scroll. The gradient fade keeps content from looking like it cuts
+   off hard behind the bar. */
+.progress-dock {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  display: flex;
+  justify-content: center;
+  padding: 18px 24px calc(18px + env(safe-area-inset-bottom));
+  background: linear-gradient(to top, var(--surface) 55%, transparent);
+  pointer-events: none;
+}
+
+/* Author `display:flex` beats the UA `[hidden]` rule — enforce hide on reveal. */
+.progress-dock[hidden] {
+  display: none !important;
+}
+
+/* Segmented progress bar — one segment per step, each fills independently
+   as the user completes it. Reads at a glance as "step 2 of 4", not just
+   a vague fraction of a single bar. */
+.progress {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+  max-width: var(--max-w);
+  pointer-events: auto;
+}
+
+.progress-seg {
+  flex: 1;
+  height: 10px;
+  border-radius: 5px;
+  background: var(--surface-elevated);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-seg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  border-radius: 5px;
+  box-shadow: 0 0 10px 2px rgba(33, 148, 255, .85), 0 0 22px 4px rgba(33, 148, 255, .5);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--anim) var(--ease);
+}
+
+.progress-seg.filled::after { transform: scaleX(1); }
+
+/* ---------- Steps ---------- */
+
+.step {
+  animation: stepIn var(--anim) var(--ease);
+}
+
+@keyframes stepIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.step h2 {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #04140c;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+}
+
+.hint {
+  color: var(--text-dim);
+  font-size: var(--fs-sm);
+  margin: -6px 0 14px;
+  text-align: center;
+}
+
+.hint span { color: var(--accent); font-weight: 700; }
+
+/* ---------- Chips (sports / leagues) ---------- */
+
+.chip-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--surface-elevated);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  color: var(--text);
+  font-size: var(--fs-md);
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color var(--anim-fast) var(--ease),
+              background var(--anim-fast) var(--ease),
+              transform var(--anim-fast) var(--ease);
+}
+
+.chip .icon { font-size: 17px; line-height: 1; }
+
+.chip:active { transform: scale(0.96); }
+
+.chip.selected {
+  border-color: var(--accent);
+  background: var(--accent-wash);
+  color: var(--accent);
+}
+
+/* ---------- Grouped lists (steps 2 & 3) ---------- */
+/* Leagues grouped by sport, teams grouped by league — each group is a thin
+   divider (icon + name + hairline) followed by its own card grid, rather
+   than one flat mixed grid. */
+
+.grouped-list { margin-bottom: 22px; }
+
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 22px 0 10px;
+}
+
+.section-divider:first-child { margin-top: 0; }
+
+.section-divider-label {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.section-divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* League icon, shrunk down for the divider's inline context — the full
+   52px card size would overpower a thin section header. */
+.section-divider .league-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+/* ---------- League grid ---------- */
+/* Card layout (logo above name), not an inline pill — a real league logo
+   needs room a text-height pill can't give it. */
+
+.league-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.league-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 8px;
+  background: var(--surface-elevated);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color var(--anim-fast) var(--ease), transform var(--anim-fast) var(--ease);
+}
+
+.league-badge:active { transform: scale(0.96); }
+
+.league-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  line-height: 1;
+  /* Isolates this element's own background-image into its own compositing
+     layer. Works around a Safari/WebKit bug where a backdrop-filter on an
+     ancestor (the card, for the glass effect) can corrupt how a
+     descendant's own background-image paints — visible as the image
+     appearing clipped/offset even though background-size:contain guarantees
+     it can never actually crop. */
+  isolation: isolate;
+  transform: translateZ(0);
+}
+
+.league-badge.selected {
+  border-color: var(--accent);
+  background: var(--accent-wash);
+}
+
+.league-name {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.league-badge.selected .league-name { color: var(--text); }
+
+/* ---------- Team grid ---------- */
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.team-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 6px;
+  background: var(--surface-elevated);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color var(--anim-fast) var(--ease),
+              transform var(--anim-fast) var(--ease);
+}
+
+.team-badge:active { transform: scale(0.94); }
+
+.team-crest {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: var(--fs-xs);
+  transition: transform var(--anim-fast) var(--ease);
+  isolation: isolate;
+  transform: translateZ(0);
+}
+
+/* Real crest/logo fetched from the external API replaces the CSS-drawn
+   initials or emoji. Transparent — the badge PNGs carry their own
+   background (or none), sitting directly on the card. */
+.team-crest.has-badge,
+.mini-crest.has-badge,
+.league-icon.has-badge {
+  background-color: transparent;
+  /* 72%, not contain (100%) — guarantees breathing room around the mark
+     even for source assets with little/no internal padding of their own
+     (e.g. Bundesliga's badge, which touches its own canvas edges). */
+  background-size: 72%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.team-badge.selected {
+  border-color: var(--accent);
+  background: var(--accent-wash);
+}
+
+.team-badge.selected .team-crest {
+  transform: scale(1.12) translateZ(0);
+}
+
+.team-name {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.team-badge.selected .team-name { color: var(--text); }
+
+/* ---------- Buttons ---------- */
+
+.step-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.step-actions.single {
+  display: flex;
+  justify-content: center;
+}
+
+.step-actions.single .btn-primary {
+  flex: none;
+  width: 100%;
+  max-width: 340px;
+  padding: 17px 18px;
+}
+
+.btn-primary, .btn-secondary {
+  flex: 1;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 15px 18px;
+  font-size: var(--fs-md);
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform var(--anim-fast) var(--ease), opacity var(--anim-fast) var(--ease);
+  text-align: center;
+  text-decoration: none;
+  display: block;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #04140c;
+}
+
+.btn-primary:active { transform: scale(0.98); }
+
+.btn-primary:disabled {
+  background: var(--border);
+  color: var(--text-dim);
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1.5px solid var(--border);
+  flex: 0 0 auto;
+  min-width: 96px;
+}
+
+.btn-text {
+  display: block;
+  margin: 18px auto 0;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: var(--fs-base);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Locked state while a transition/animation is in-flight */
+.is-locked .btn-primary,
+.is-locked .btn-secondary,
+.is-locked .chip,
+.is-locked .league-badge,
+.is-locked .team-badge {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* ---------- Reveal / matchday feed ---------- */
+
+.reveal { position: relative; }
+
+.feed-title {
+  font-size: clamp(22px, 6vw, 28px);
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+  margin: 4px 0 18px;
+  text-align: center;
+}
+
+/* Live panel — real data from the external API, sits above the config-driven
+   feed below it. Only shown once real matching data actually arrives. */
+.live-panel { margin-bottom: 28px; }
+
+.live-panel h3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--text);
+  text-transform: none;
+  letter-spacing: 0;
+  margin-bottom: 14px;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--danger);
+  box-shadow: 0 0 6px rgba(255, 73, 92, .7);
+  animation: livePulse 1.4s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .4; }
+}
+
+.fixture-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.fixture-card {
+  background: var(--surface-elevated);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 16px 18px;
+  animation: fixtureIn 360ms var(--ease) both;
+}
+
+@keyframes fixtureIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.fixture-meta {
+  font-size: var(--fs-xs);
+  color: var(--text-dim);
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+/* Status line, centered above the score: "Match ended" once it's over,
+   the kickoff date/time before it starts, or the live clock while playing. */
+.fixture-status {
+  display: block;
+  text-align: center;
+  font-size: var(--fs-xs);
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.fixture-status.live { color: var(--danger); font-weight: 700; }
+
+.fixture-match {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-height: 72px;
+}
+
+.fixture-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+
+.fixture-side.away { flex-direction: column; text-align: center; }
+
+.fixture-team-name {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  line-height: 1.25;
+  max-width: 100%;
+}
+
+.mini-crest {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+  isolation: isolate;
+  transform: translateZ(0);
+}
+
+.fixture-score-block {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: clamp(22px, 6vw, 28px);
+  flex-shrink: 0;
+  padding: 12px 6px 0;
+  min-width: 72px;
+  justify-content: center;
+}
+
+.fixture-score-sep { color: var(--text-dim); font-weight: 500; }
+
+.fixture-kickoff {
+  flex-shrink: 0;
+  align-self: center;
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--text-dim);
+  padding: 12px 6px 0;
+  text-align: center;
+  min-width: 72px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------- Progressive enhancement (mobile-first: base = ~390px) ---------- */
+
+@media (min-width: 480px) {
+  main { padding: 20px 28px 100px; }
+  .team-grid { grid-template-columns: repeat(4, 1fr); }
+  .league-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 600px) {
+  :root { --max-w: 560px; }
+  main { padding: 28px 36px 112px; }
+  .step-actions { gap: 14px; }
+}

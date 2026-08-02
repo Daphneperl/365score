@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#000000">
+<meta name="description" content="Choose your rush — Sports or Casino.">
+<title>365Scores — Choose Your Rush</title>
+<link rel="preconnect" href="https://res.365scores.com" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="brand-header">
+  <span class="brand">365<span class="accent">PLAY</span></span>
+</header>
+
+<div id="app" class="is-locked">
+  <div id="loadingOverlay" class="loading-overlay" role="status" aria-live="polite" aria-busy="true">
+    <div class="spinner" aria-hidden="true"></div>
+    <p>Loading</p>
+  </div>
+
+  <main class="hub" id="hubMain" hidden>
+    <h1>Choose your rush</h1>
+    <nav class="hub-actions" aria-label="Choose a vertical">
+      <a class="btn-primary" id="linkSports" href="sports/index.html">⚽ Sports</a>
+      <a class="btn-primary" id="linkCasino" href="casino/index.html">🎰 Casino</a>
+    </nav>
+  </main>
+</div>
+
+<script>
+(function () {
+  var LOAD_MS = 1500;
+  var LOCK_MS = 320;
+  var app = document.getElementById('app');
+  var overlay = document.getElementById('loadingOverlay');
+  var main = document.getElementById('hubMain');
+  var sports = document.getElementById('linkSports');
+  var casino = document.getElementById('linkCasino');
+  var navigating = false;
+
+  function randomVariant() {
+    return Math.random() < 0.5 ? 'A' : 'B';
+  }
+
+  sports.href = 'sports/index.html?variant=' + randomVariant();
+  casino.href = 'casino/index.html?variant=' + randomVariant();
+
+  function unlock() {
+    overlay.hidden = true;
+    overlay.setAttribute('aria-busy', 'false');
+    main.hidden = false;
+    app.classList.remove('is-locked');
+  }
+
+  setTimeout(unlock, LOAD_MS);
+
+  function guardClick(evt) {
+    if (navigating || app.classList.contains('is-locked')) {
+      evt.preventDefault();
+      return;
+    }
+    navigating = true;
+    app.classList.add('is-locked');
+    // Keep locked through navigation; if the browser somehow stays, release after a beat.
+    setTimeout(function () {
+      navigating = false;
+      app.classList.remove('is-locked');
+    }, LOCK_MS);
+  }
+
+  sports.addEventListener('click', guardClick);
+  casino.addEventListener('click', guardClick);
+})();
+</script>
+</body>
+</html>

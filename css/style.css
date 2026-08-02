@@ -1,0 +1,203 @@
+/* ==========================================================================
+   365Scores — Choose Your Rush (hub)
+   Tokens + chrome mirrored from sports/css/style.css.
+   ========================================================================== */
+
+@font-face {
+  font-family: '365 Sans';
+  src: url('https://res.365scores.com/fonts/365_Sans_Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: '365 Sans';
+  src: url('https://res.365scores.com/fonts/365_Sans_Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: '365 Sans';
+  src: url('https://res.365scores.com/fonts/365_Sans_DemiBold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --header-bg: #000000;
+  --surface: #05070b;
+  --border: rgba(255, 255, 255, .1);
+  --text: #ffffff;
+  --text-dim: #9da0a2;
+  --accent: #2194ff;
+  --font-body: '365 Sans', Roboto, Heebo, -apple-system, BlinkMacSystemFont, sans-serif;
+  --fs-base: 14px;
+  --fs-md: 16px;
+  --radius-sm: 3px;
+  --anim-fast: 160ms;
+  --anim: 320ms;
+  --ease: cubic-bezier(.22, .9, .34, 1);
+  --max-w: 480px;
+  --surface-glow:
+    radial-gradient(120% 55% at 50% 0%, rgba(33, 148, 255, .22), transparent 60%),
+    radial-gradient(90% 45% at 90% 100%, rgba(33, 148, 255, .1), transparent 55%),
+    repeating-linear-gradient(115deg, rgba(255, 255, 255, .025) 0px, rgba(255, 255, 255, .025) 1px, transparent 1px, transparent 140px),
+    repeating-linear-gradient(25deg, rgba(255, 255, 255, .02) 0px, rgba(255, 255, 255, .02) 1px, transparent 1px, transparent 160px);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --surface: #f3f3f3;
+    --border: #ced0d0;
+    --text: #151e22;
+    --text-dim: #6b7173;
+    --surface-glow: none;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--surface);
+  background-image: var(--surface-glow);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: var(--text);
+}
+
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 { margin: 0; }
+
+#app {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  width: 100%;
+  background: var(--header-bg);
+  padding: 14px 16px;
+}
+
+.brand-header .brand {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.brand-header .brand .accent { color: var(--accent); }
+
+.hub {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 28px;
+  padding: 24px;
+}
+
+.hub h1 {
+  font-size: clamp(26px, 8vw, 36px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.3px;
+  max-width: 340px;
+}
+
+.hub-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 340px;
+}
+
+.btn-primary, .btn-secondary {
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 17px 18px;
+  font-size: var(--fs-md);
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform var(--anim-fast) var(--ease), opacity var(--anim-fast) var(--ease);
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  -webkit-tap-highlight-color: transparent;
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:active,
+.btn-secondary:active { transform: scale(0.98); }
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background-color: var(--surface);
+  background-image: var(--surface-glow);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.loading-overlay[hidden] {
+  display: none !important;
+}
+
+.loading-overlay p {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: var(--fs-md);
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: hub-spin 0.8s linear infinite;
+}
+
+@keyframes hub-spin {
+  to { transform: rotate(360deg); }
+}
+
+.is-locked .btn-primary,
+.is-locked .btn-secondary {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary, .btn-secondary { transition-duration: .001ms; }
+  .spinner { animation-duration: .001ms; animation-iteration-count: 1; }
+}

@@ -1,0 +1,467 @@
+{
+  "brand": {
+    "name": "365SCORES",
+    "accent": "#2194FF"
+  },
+  "headlines": {
+    "A": {
+      "title": "Your matches. Your way.",
+      "subtitle": "Pick your sports, leagues and teams — get a live feed made for you."
+    },
+    "B": {
+      "title": "Everyone's Saturday looks different.",
+      "subtitle": "Personalize 365Scores in seconds and see today's action instantly."
+    }
+  },
+  "sports": [
+    {
+      "id": "football",
+      "name": "Football",
+      "icon": "⚽",
+      "leagues": [
+        {
+          "id": "epl",
+          "name": "Premier League",
+          "teams": [
+            { "id": "ars", "name": "Arsenal", "short": "ARS", "color": "#EF0107" },
+            { "id": "mci", "name": "Man City", "short": "MCI", "color": "#6CABDD" },
+            { "id": "liv", "name": "Liverpool", "short": "LIV", "color": "#C8102E" },
+            { "id": "mun", "name": "Man United", "short": "MUN", "color": "#DA291C", "searchName": "Manchester United" },
+            { "id": "che", "name": "Chelsea", "short": "CHE", "color": "#034694" },
+            { "id": "tot", "name": "Tottenham", "short": "TOT", "color": "#132257" }
+          ]
+        },
+        {
+          "id": "laliga",
+          "name": "La Liga",
+          "teams": [
+            { "id": "rma", "name": "Real Madrid", "short": "RMA", "color": "#FEBE10" },
+            { "id": "fcb", "name": "Barcelona", "short": "FCB", "color": "#A50044" },
+            { "id": "atm", "name": "Atlético Madrid", "short": "ATM", "color": "#CB3524" },
+            { "id": "sev", "name": "Sevilla", "short": "SEV", "color": "#D8232A" }
+          ]
+        },
+        {
+          "id": "seriea",
+          "name": "Serie A",
+          "teams": [
+            { "id": "int", "name": "Inter", "short": "INT", "color": "#010E80", "searchName": "Inter Milan" },
+            { "id": "mil2", "name": "AC Milan", "short": "MIL", "color": "#FB090B" },
+            { "id": "nap", "name": "Napoli", "short": "NAP", "color": "#12A0D7" },
+            { "id": "rom", "name": "AS Roma", "short": "ROM", "color": "#8E1F2F" }
+          ]
+        },
+        {
+          "id": "bundesliga",
+          "name": "Bundesliga",
+          "teams": [
+            { "id": "bay", "name": "Bayern Munich", "short": "BAY", "color": "#DC052D" },
+            { "id": "bvb", "name": "Dortmund", "short": "BVB", "color": "#FDE100", "searchName": "Borussia Dortmund" },
+            { "id": "rbl", "name": "RB Leipzig", "short": "RBL", "color": "#DD0741" },
+            { "id": "b04", "name": "Leverkusen", "short": "B04", "color": "#E32221" }
+          ]
+        },
+        {
+          "id": "ligue1",
+          "name": "Ligue 1",
+          "teams": [
+            { "id": "psg", "name": "PSG", "short": "PSG", "color": "#004170", "searchName": "Paris Saint Germain" },
+            { "id": "om", "name": "Marseille", "short": "OM", "color": "#2FAEE0" },
+            { "id": "asm", "name": "Monaco", "short": "ASM", "color": "#E51937" },
+            { "id": "ol", "name": "Lyon", "short": "OL", "color": "#DA2128" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "basketball",
+      "name": "Basketball",
+      "icon": "🏀",
+      "leagues": [
+        {
+          "id": "nba",
+          "name": "NBA",
+          "teams": [
+            { "id": "lal", "name": "Lakers", "short": "LAL", "color": "#552583" },
+            { "id": "bos", "name": "Celtics", "short": "BOS", "color": "#007A33" },
+            { "id": "gsw", "name": "Warriors", "short": "GSW", "color": "#1D428A" },
+            { "id": "mil", "name": "Bucks", "short": "MIL", "color": "#00471B" }
+          ]
+        },
+        {
+          "id": "euroleague",
+          "name": "EuroLeague",
+          "teams": [
+            { "id": "rmab", "name": "Real Madrid", "short": "RMA", "color": "#FEBE10" },
+            { "id": "fcbb", "name": "Barça", "short": "FCB", "color": "#A50044", "searchName": "FC Barcelona Basquet" },
+            { "id": "fen", "name": "Fenerbahçe", "short": "FEN", "color": "#FFED00" },
+            { "id": "oly", "name": "Olympiacos", "short": "OLY", "color": "#CC0000" }
+          ]
+        },
+        {
+          "id": "nbl",
+          "name": "NBL",
+          "teams": [
+            { "id": "melu", "name": "Melbourne United", "short": "MEL", "color": "#002B5C" },
+            { "id": "syd", "name": "Sydney Kings", "short": "SYD", "color": "#A6192E" },
+            { "id": "per", "name": "Perth Wildcats", "short": "PER", "color": "#E2231A" },
+            { "id": "nzb", "name": "NZ Breakers", "short": "NZB", "color": "#00AEEF" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nfl",
+      "name": "Am. Football",
+      "icon": "🏈",
+      "leagues": [
+        {
+          "id": "nfl",
+          "name": "NFL",
+          "teams": [
+            { "id": "kc", "name": "Chiefs", "short": "KC", "color": "#E31837", "searchName": "Kansas City Chiefs" },
+            { "id": "sf", "name": "49ers", "short": "SF", "color": "#AA0000", "searchName": "San Francisco 49ers" },
+            { "id": "buf", "name": "Bills", "short": "BUF", "color": "#00338D" },
+            { "id": "dal", "name": "Cowboys", "short": "DAL", "color": "#041E42" }
+          ]
+        },
+        {
+          "id": "ncaaf",
+          "name": "NCAA",
+          "teams": [
+            { "id": "bama", "name": "Alabama", "short": "ALA", "color": "#9E1B32" },
+            { "id": "osu", "name": "Ohio State", "short": "OSU", "color": "#BB0000" },
+            { "id": "uga", "name": "Georgia", "short": "UGA", "color": "#BA0C2F" },
+            { "id": "mich", "name": "Michigan", "short": "MICH", "color": "#00274C" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "baseball",
+      "name": "Baseball",
+      "icon": "⚾",
+      "leagues": [
+        {
+          "id": "mlb",
+          "name": "MLB",
+          "teams": [
+            { "id": "nyy", "name": "Yankees", "short": "NYY", "color": "#003087" },
+            { "id": "lad", "name": "Dodgers", "short": "LAD", "color": "#005A9C" },
+            { "id": "bos2", "name": "Red Sox", "short": "BOS", "color": "#BD3039" },
+            { "id": "hou", "name": "Astros", "short": "HOU", "color": "#EB6E1F" }
+          ]
+        },
+        {
+          "id": "npb",
+          "name": "NPB",
+          "teams": [
+            { "id": "ygi", "name": "Yomiuri Giants", "short": "YGI", "color": "#F97709" },
+            { "id": "hat", "name": "Hanshin Tigers", "short": "HAT", "color": "#FFE201" },
+            { "id": "sbh", "name": "SoftBank Hawks", "short": "SBH", "color": "#F5A800" },
+            { "id": "chd", "name": "Chunichi Dragons", "short": "CHD", "color": "#002569" }
+          ]
+        },
+        {
+          "id": "kbo",
+          "name": "KBO",
+          "teams": [
+            { "id": "lgt", "name": "LG Twins", "short": "LGT", "color": "#C30452" },
+            { "id": "sam", "name": "Samsung Lions", "short": "SAM", "color": "#074CA1" },
+            { "id": "ssg", "name": "SSG Landers", "short": "SSG", "color": "#CE0E2D" },
+            { "id": "doo", "name": "Doosan Bears", "short": "DOO", "color": "#1C3260" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hockey",
+      "name": "Ice Hockey",
+      "icon": "🏒",
+      "leagues": [
+        {
+          "id": "nhl",
+          "name": "NHL",
+          "teams": [
+            { "id": "tor", "name": "Maple Leafs", "short": "TOR", "color": "#00205B" },
+            { "id": "nyr", "name": "Rangers", "short": "NYR", "color": "#0038A8" },
+            { "id": "chi", "name": "Blackhawks", "short": "CHI", "color": "#CF0A2C" },
+            { "id": "edm", "name": "Oilers", "short": "EDM", "color": "#FF4C00" }
+          ]
+        },
+        {
+          "id": "khl",
+          "name": "KHL",
+          "teams": [
+            { "id": "cska", "name": "CSKA Moscow", "short": "CSKA", "color": "#DA212B" },
+            { "id": "ska", "name": "SKA St. Petersburg", "short": "SKA", "color": "#0033A0" },
+            { "id": "akb", "name": "Ak Bars Kazan", "short": "AKB", "color": "#00874E" },
+            { "id": "mmg", "name": "Metallurg Magnitogorsk", "short": "MMG", "color": "#C8102E" }
+          ]
+        },
+        {
+          "id": "shl",
+          "name": "SHL",
+          "teams": [
+            { "id": "fhc", "name": "Frölunda HC", "short": "FHC", "color": "#F7A600" },
+            { "id": "fbk", "name": "Färjestad BK", "short": "FBK", "color": "#DA291C" },
+            { "id": "skl", "name": "Skellefteå AIK", "short": "SKL", "color": "#FFD100" },
+            { "id": "dif", "name": "Djurgården", "short": "DIF", "color": "#00529B" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rugby",
+      "name": "Rugby",
+      "icon": "🏉",
+      "leagues": [
+        {
+          "id": "urc",
+          "name": "United Rugby Championship",
+          "teams": [
+            { "id": "lei", "name": "Leinster", "short": "LEI", "color": "#1B3E8C" },
+            { "id": "mun2", "name": "Munster", "short": "MUN", "color": "#C10230" },
+            { "id": "stor", "name": "Stormers", "short": "STO", "color": "#00A99D" },
+            { "id": "glw", "name": "Glasgow Warriors", "short": "GLA", "color": "#7A1F3D" }
+          ]
+        },
+        {
+          "id": "top14",
+          "name": "Top 14",
+          "teams": [
+            { "id": "tou", "name": "Toulouse", "short": "TOU", "color": "#D2001C" },
+            { "id": "lar", "name": "La Rochelle", "short": "LAR", "color": "#FFD100" },
+            { "id": "r92", "name": "Racing 92", "short": "R92", "color": "#6CACE4" },
+            { "id": "ubb", "name": "Bordeaux Bègles", "short": "UBB", "color": "#002F6C" }
+          ]
+        },
+        {
+          "id": "premiership",
+          "name": "Gallagher Premiership",
+          "teams": [
+            { "id": "har", "name": "Harlequins", "short": "HAR", "color": "#1B1F54" },
+            { "id": "let", "name": "Leicester Tigers", "short": "LEI", "color": "#005EB8" },
+            { "id": "sar", "name": "Saracens", "short": "SAR", "color": "#FDB913" },
+            { "id": "bat", "name": "Bath Rugby", "short": "BAT", "color": "#00539F" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cricket",
+      "name": "Cricket",
+      "icon": "🏏",
+      "leagues": [
+        {
+          "id": "ipl",
+          "name": "IPL",
+          "teams": [
+            { "id": "mi", "name": "Mumbai Indians", "short": "MI", "color": "#004BA0" },
+            { "id": "csk", "name": "Chennai Super Kings", "short": "CSK", "color": "#FDB913" },
+            { "id": "rcb", "name": "Royal Challengers Bengaluru", "short": "RCB", "color": "#EC1C24" },
+            { "id": "kkr", "name": "Kolkata Knight Riders", "short": "KKR", "color": "#3A225D" }
+          ]
+        },
+        {
+          "id": "bbl",
+          "name": "Big Bash League",
+          "teams": [
+            { "id": "syx", "name": "Sydney Sixers", "short": "SYX", "color": "#EE3124" },
+            { "id": "mls", "name": "Melbourne Stars", "short": "MLS", "color": "#00A19A" },
+            { "id": "psc", "name": "Perth Scorchers", "short": "PSC", "color": "#F7941D" },
+            { "id": "bnh", "name": "Brisbane Heat", "short": "BNH", "color": "#6E2585" }
+          ]
+        },
+        {
+          "id": "psl",
+          "name": "Pakistan Super League",
+          "teams": [
+            { "id": "pz", "name": "Peshawar Zalmi", "short": "PZ", "color": "#FFD100" },
+            { "id": "kk", "name": "Karachi Kings", "short": "KK", "color": "#00539B" },
+            { "id": "lq", "name": "Lahore Qalandars", "short": "LQ", "color": "#00A651" },
+            { "id": "isu", "name": "Islamabad United", "short": "ISU", "color": "#C8102E" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "volleyball",
+      "name": "Volleyball",
+      "icon": "🏐",
+      "leagues": [
+        {
+          "id": "fivb",
+          "name": "FIVB Nations League",
+          "teams": [
+            { "id": "pol", "name": "Poland", "short": "POL", "color": "#DC143C" },
+            { "id": "bra", "name": "Brazil", "short": "BRA", "color": "#009739" },
+            { "id": "ita", "name": "Italy", "short": "ITA", "color": "#0055A4" },
+            { "id": "usa", "name": "USA", "short": "USA", "color": "#B22234" }
+          ]
+        },
+        {
+          "id": "seriea1",
+          "name": "Serie A1",
+          "teams": [
+            { "id": "con", "name": "Conegliano", "short": "CON", "color": "#6BA544" },
+            { "id": "mivb", "name": "Milano", "short": "MIL", "color": "#E30613" },
+            { "id": "sca", "name": "Scandicci", "short": "SCA", "color": "#4B2E83" },
+            { "id": "nov", "name": "Novara", "short": "NOV", "color": "#FFD100" }
+          ]
+        },
+        {
+          "id": "plusliga",
+          "name": "PlusLiga",
+          "teams": [
+            { "id": "zak", "name": "ZAKSA", "short": "ZAK", "color": "#F5A800" },
+            { "id": "jw", "name": "Jastrzębski Węgiel", "short": "JW", "color": "#D91C24" },
+            { "id": "skb", "name": "Skra Bełchatów", "short": "SKB", "color": "#E2001A" },
+            { "id": "ares", "name": "Asseco Resovia", "short": "RES", "color": "#005CA9" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "esports",
+      "name": "Esports",
+      "icon": "🎮",
+      "leagues": [
+        {
+          "id": "lec",
+          "name": "LEC",
+          "teams": [
+            { "id": "fnc", "name": "Fnatic", "short": "FNC", "color": "#FF5900" },
+            { "id": "koi", "name": "MAD Lions KOI", "short": "KOI", "color": "#F5A800" },
+            { "id": "vit", "name": "Team Vitality", "short": "VIT", "color": "#FFE900" },
+            { "id": "bds", "name": "Team BDS", "short": "BDS", "color": "#E4032E" }
+          ]
+        },
+        {
+          "id": "lck",
+          "name": "LCK",
+          "teams": [
+            { "id": "t1", "name": "T1", "short": "T1", "color": "#E2012D" },
+            { "id": "geng", "name": "Gen.G", "short": "GEN", "color": "#C6A664" },
+            { "id": "drx", "name": "DRX", "short": "DRX", "color": "#00C2CB" },
+            { "id": "hle", "name": "Hanwha Life", "short": "HLE", "color": "#F36C21" }
+          ]
+        },
+        {
+          "id": "lcs",
+          "name": "LCS",
+          "teams": [
+            { "id": "c9", "name": "Cloud9", "short": "C9", "color": "#00AEEF" },
+            { "id": "tl", "name": "Team Liquid", "short": "TL", "color": "#001E62" },
+            { "id": "hth", "name": "100 Thieves", "short": "100", "color": "#C41E3A" },
+            { "id": "fly", "name": "FlyQuest", "short": "FLY", "color": "#00573F" }
+          ]
+        }
+      ]
+    }
+  ],
+  "fixtures": [
+    { "home": "ars", "away": "che", "homeScore": 2, "awayScore": 1, "status": "LIVE 67'", "competition": "Premier League" },
+    { "home": "mci", "away": "liv", "homeScore": 0, "awayScore": 0, "status": "Today 20:00", "competition": "Premier League" },
+    { "home": "mun", "away": "tot", "homeScore": 1, "awayScore": 3, "status": "FT", "competition": "Premier League" },
+    { "home": "rma", "away": "fcb", "homeScore": 1, "awayScore": 1, "status": "LIVE 52'", "competition": "La Liga" },
+    { "home": "atm", "away": "sev", "homeScore": null, "awayScore": null, "status": "Tomorrow 18:30", "competition": "La Liga" },
+    { "home": "lal", "away": "bos", "homeScore": 98, "awayScore": 101, "status": "Q4 4:12", "competition": "NBA" },
+    { "home": "gsw", "away": "mil", "homeScore": null, "awayScore": null, "status": "Today 22:00", "competition": "NBA" },
+    { "home": "kc", "away": "buf", "homeScore": 24, "awayScore": 20, "status": "FT", "competition": "NFL" },
+    { "home": "sf", "away": "dal", "homeScore": null, "awayScore": null, "status": "Sun 17:00", "competition": "NFL" },
+    { "home": "che", "away": "mci", "homeScore": null, "awayScore": null, "status": "Sat 15:00", "competition": "Premier League" },
+    { "home": "fcb", "away": "atm", "homeScore": 2, "awayScore": 0, "status": "FT", "competition": "La Liga" },
+    { "home": "bos", "away": "gsw", "homeScore": null, "awayScore": null, "status": "Wed 21:30", "competition": "NBA" },
+    { "home": "buf", "away": "dal", "homeScore": null, "awayScore": null, "status": "Mon 20:15", "competition": "NFL" },
+    { "home": "liv", "away": "mun", "homeScore": 3, "awayScore": 1, "status": "FT", "competition": "Premier League" },
+    { "home": "int", "away": "mil2", "homeScore": 2, "awayScore": 1, "status": "FT", "competition": "Serie A" },
+    { "home": "nap", "away": "rom", "homeScore": null, "awayScore": null, "status": "Sun 20:45", "competition": "Serie A" },
+    { "home": "bay", "away": "bvb", "homeScore": 3, "awayScore": 2, "status": "FT", "competition": "Bundesliga" },
+    { "home": "rbl", "away": "b04", "homeScore": null, "awayScore": null, "status": "Sat 18:30", "competition": "Bundesliga" },
+    { "home": "psg", "away": "om", "homeScore": 2, "awayScore": 0, "status": "LIVE 71'", "competition": "Ligue 1" },
+    { "home": "asm", "away": "ol", "homeScore": null, "awayScore": null, "status": "Sun 21:00", "competition": "Ligue 1" },
+    { "home": "rmab", "away": "fcbb", "homeScore": 78, "awayScore": 74, "status": "LIVE Q3", "competition": "EuroLeague" },
+    { "home": "fen", "away": "oly", "homeScore": null, "awayScore": null, "status": "Thu 19:00", "competition": "EuroLeague" },
+    { "home": "melu", "away": "syd", "homeScore": 89, "awayScore": 85, "status": "FT", "competition": "NBL" },
+    { "home": "per", "away": "nzb", "homeScore": null, "awayScore": null, "status": "Fri 19:30", "competition": "NBL" },
+    { "home": "bama", "away": "osu", "homeScore": null, "awayScore": null, "status": "Sat 19:30", "competition": "NCAA" },
+    { "home": "uga", "away": "mich", "homeScore": 27, "awayScore": 24, "status": "FT", "competition": "NCAA" },
+    { "home": "nyy", "away": "bos2", "homeScore": null, "awayScore": null, "status": "Today 19:05", "competition": "MLB" },
+    { "home": "lad", "away": "hou", "homeScore": 4, "awayScore": 2, "status": "FT", "competition": "MLB" },
+    { "home": "ygi", "away": "hat", "homeScore": 5, "awayScore": 3, "status": "FT", "competition": "NPB" },
+    { "home": "sbh", "away": "chd", "homeScore": null, "awayScore": null, "status": "Today 18:00", "competition": "NPB" },
+    { "home": "lgt", "away": "sam", "homeScore": null, "awayScore": null, "status": "Tomorrow 18:30", "competition": "KBO" },
+    { "home": "ssg", "away": "doo", "homeScore": 6, "awayScore": 4, "status": "FT", "competition": "KBO" },
+    { "home": "tor", "away": "nyr", "homeScore": 2, "awayScore": 1, "status": "LIVE P2", "competition": "NHL" },
+    { "home": "chi", "away": "edm", "homeScore": null, "awayScore": null, "status": "Tomorrow 19:30", "competition": "NHL" },
+    { "home": "cska", "away": "ska", "homeScore": 3, "awayScore": 2, "status": "FT", "competition": "KHL" },
+    { "home": "akb", "away": "mmg", "homeScore": null, "awayScore": null, "status": "Wed 17:00", "competition": "KHL" },
+    { "home": "fhc", "away": "fbk", "homeScore": null, "awayScore": null, "status": "Fri 19:00", "competition": "SHL" },
+    { "home": "skl", "away": "dif", "homeScore": 4, "awayScore": 1, "status": "FT", "competition": "SHL" },
+    { "home": "lei", "away": "mun2", "homeScore": 24, "awayScore": 18, "status": "FT", "competition": "United Rugby Championship" },
+    { "home": "stor", "away": "glw", "homeScore": null, "awayScore": null, "status": "Sat 15:00", "competition": "United Rugby Championship" },
+    { "home": "tou", "away": "r92", "homeScore": null, "awayScore": null, "status": "Sat 21:05", "competition": "Top 14" },
+    { "home": "lar", "away": "ubb", "homeScore": 31, "awayScore": 20, "status": "FT", "competition": "Top 14" },
+    { "home": "har", "away": "let", "homeScore": null, "awayScore": null, "status": "Sun 15:00", "competition": "Gallagher Premiership" },
+    { "home": "sar", "away": "bat", "homeScore": 22, "awayScore": 17, "status": "FT", "competition": "Gallagher Premiership" },
+    { "home": "mi", "away": "csk", "homeScore": null, "awayScore": null, "status": "Tomorrow 19:30", "competition": "IPL" },
+    { "home": "rcb", "away": "kkr", "homeScore": 187, "awayScore": 172, "status": "FT", "competition": "IPL" },
+    { "home": "syx", "away": "mls", "homeScore": null, "awayScore": null, "status": "Fri 19:15", "competition": "Big Bash League" },
+    { "home": "psc", "away": "bnh", "homeScore": 178, "awayScore": 165, "status": "FT", "competition": "Big Bash League" },
+    { "home": "pz", "away": "kk", "homeScore": null, "awayScore": null, "status": "Sat 20:00", "competition": "Pakistan Super League" },
+    { "home": "lq", "away": "isu", "homeScore": 165, "awayScore": 159, "status": "FT", "competition": "Pakistan Super League" },
+    { "home": "pol", "away": "bra", "homeScore": 3, "awayScore": 1, "status": "FT", "competition": "FIVB Nations League" },
+    { "home": "ita", "away": "usa", "homeScore": null, "awayScore": null, "status": "Fri 18:00", "competition": "FIVB Nations League" },
+    { "home": "con", "away": "mivb", "homeScore": 3, "awayScore": 0, "status": "FT", "competition": "Serie A1" },
+    { "home": "sca", "away": "nov", "homeScore": null, "awayScore": null, "status": "Sun 17:00", "competition": "Serie A1" },
+    { "home": "zak", "away": "jw", "homeScore": null, "awayScore": null, "status": "Sat 18:00", "competition": "PlusLiga" },
+    { "home": "skb", "away": "ares", "homeScore": 3, "awayScore": 2, "status": "FT", "competition": "PlusLiga" },
+    { "home": "fnc", "away": "koi", "homeScore": null, "awayScore": null, "status": "Today 21:00", "competition": "LEC" },
+    { "home": "vit", "away": "bds", "homeScore": 2, "awayScore": 1, "status": "FT", "competition": "LEC" },
+    { "home": "t1", "away": "geng", "homeScore": 3, "awayScore": 2, "status": "FT", "competition": "LCK" },
+    { "home": "drx", "away": "hle", "homeScore": null, "awayScore": null, "status": "Tomorrow 09:00", "competition": "LCK" },
+    { "home": "c9", "away": "tl", "homeScore": null, "awayScore": null, "status": "Today 22:00", "competition": "LCS" },
+    { "home": "hth", "away": "fly", "homeScore": 2, "awayScore": 0, "status": "FT", "competition": "LCS" },
+    { "home": "tot", "away": "ars", "homeScore": null, "awayScore": null, "status": "Sun 16:30", "competition": "Premier League" },
+    { "home": "liv", "away": "che", "homeScore": 1, "awayScore": 1, "status": "LIVE 33'", "competition": "Premier League" },
+    { "home": "sev", "away": "rma", "homeScore": null, "awayScore": null, "status": "Sat 21:00", "competition": "La Liga" },
+    { "home": "mil2", "away": "nap", "homeScore": 0, "awayScore": 2, "status": "FT", "competition": "Serie A" },
+    { "home": "rom", "away": "int", "homeScore": null, "awayScore": null, "status": "Mon 20:45", "competition": "Serie A" },
+    { "home": "bvb", "away": "rbl", "homeScore": 2, "awayScore": 2, "status": "LIVE 58'", "competition": "Bundesliga" },
+    { "home": "b04", "away": "bay", "homeScore": null, "awayScore": null, "status": "Sun 17:30", "competition": "Bundesliga" },
+    { "home": "ol", "away": "psg", "homeScore": null, "awayScore": null, "status": "Sat 21:00", "competition": "Ligue 1" },
+    { "home": "om", "away": "asm", "homeScore": 1, "awayScore": 0, "status": "FT", "competition": "Ligue 1" },
+    { "home": "mil", "away": "lal", "homeScore": null, "awayScore": null, "status": "Fri 20:00", "competition": "NBA" },
+    { "home": "bos", "away": "mil", "homeScore": 112, "awayScore": 108, "status": "LIVE Q4", "competition": "NBA" },
+    { "home": "oly", "away": "rmab", "homeScore": null, "awayScore": null, "status": "Tue 20:00", "competition": "EuroLeague" },
+    { "home": "fcbb", "away": "fen", "homeScore": 81, "awayScore": 77, "status": "FT", "competition": "EuroLeague" },
+    { "home": "syd", "away": "per", "homeScore": null, "awayScore": null, "status": "Sun 14:00", "competition": "NBL" },
+    { "home": "dal", "away": "kc", "homeScore": 17, "awayScore": 21, "status": "LIVE Q3", "competition": "NFL" },
+    { "home": "sf", "away": "buf", "homeScore": null, "awayScore": null, "status": "Sun 20:20", "competition": "NFL" },
+    { "home": "osu", "away": "mich", "homeScore": null, "awayScore": null, "status": "Sat 15:30", "competition": "NCAA" },
+    { "home": "hou", "away": "nyy", "homeScore": 3, "awayScore": 3, "status": "LIVE 7th", "competition": "MLB" },
+    { "home": "bos2", "away": "lad", "homeScore": null, "awayScore": null, "status": "Tonight 22:10", "competition": "MLB" },
+    { "home": "hat", "away": "sbh", "homeScore": null, "awayScore": null, "status": "Tomorrow 18:00", "competition": "NPB" },
+    { "home": "doo", "away": "lgt", "homeScore": 2, "awayScore": 5, "status": "FT", "competition": "KBO" },
+    { "home": "edm", "away": "tor", "homeScore": 1, "awayScore": 1, "status": "LIVE P3", "competition": "NHL" },
+    { "home": "nyr", "away": "chi", "homeScore": null, "awayScore": null, "status": "Thu 19:00", "competition": "NHL" },
+    { "home": "ska", "away": "akb", "homeScore": null, "awayScore": null, "status": "Fri 17:30", "competition": "KHL" },
+    { "home": "dif", "away": "fhc", "homeScore": 2, "awayScore": 3, "status": "FT", "competition": "SHL" },
+    { "home": "glw", "away": "lei", "homeScore": null, "awayScore": null, "status": "Fri 19:35", "competition": "United Rugby Championship" },
+    { "home": "r92", "away": "lar", "homeScore": 27, "awayScore": 24, "status": "LIVE 62'", "competition": "Top 14" },
+    { "home": "bat", "away": "har", "homeScore": null, "awayScore": null, "status": "Sat 15:00", "competition": "Gallagher Premiership" },
+    { "home": "csk", "away": "rcb", "homeScore": null, "awayScore": null, "status": "Sun 15:30", "competition": "IPL" },
+    { "home": "kkr", "away": "mi", "homeScore": 164, "awayScore": 168, "status": "FT", "competition": "IPL" },
+    { "home": "mls", "away": "psc", "homeScore": null, "awayScore": null, "status": "Sat 18:15", "competition": "Big Bash League" },
+    { "home": "kk", "away": "lq", "homeScore": 142, "awayScore": 140, "status": "LIVE 18.2", "competition": "Pakistan Super League" },
+    { "home": "bra", "away": "ita", "homeScore": null, "awayScore": null, "status": "Sat 16:00", "competition": "FIVB Nations League" },
+    { "home": "usa", "away": "pol", "homeScore": 2, "awayScore": 3, "status": "FT", "competition": "FIVB Nations League" },
+    { "home": "mivb", "away": "sca", "homeScore": null, "awayScore": null, "status": "Tue 20:30", "competition": "Serie A1" },
+    { "home": "jw", "away": "skb", "homeScore": 3, "awayScore": 1, "status": "FT", "competition": "PlusLiga" },
+    { "home": "koi", "away": "vit", "homeScore": 0, "awayScore": 1, "status": "LIVE 28'", "competition": "LEC" },
+    { "home": "geng", "away": "drx", "homeScore": null, "awayScore": null, "status": "Today 11:00", "competition": "LCK" },
+    { "home": "tl", "away": "hth", "homeScore": 1, "awayScore": 2, "status": "FT", "competition": "LCS" },
+    { "home": "fly", "away": "c9", "homeScore": null, "awayScore": null, "status": "Sat 22:00", "competition": "LCS" }
+  ]
+}

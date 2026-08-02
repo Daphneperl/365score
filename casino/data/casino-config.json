@@ -1,0 +1,52 @@
+{
+  "settings": {
+    "animMs": 340,
+    "spinMs": 5500,
+    "claimDelayMs": 1500,
+    "guaranteedCoins": 600,
+    "guaranteedSegmentId": "coins_600"
+  },
+  "headlines": {
+    "A": {
+      "title": "Think You Can Hit\nthe Jackpot?",
+      "subtitle": "spin to test your luck"
+    },
+    "B": {
+      "title": "Welcome Package\nUnlocked",
+      "subtitle": "spin to test your luck"
+    }
+  },
+  "ui": {
+    "spinCta": "SPIN",
+    "emailLabel": "Email",
+    "emailPlaceholder": "type anything",
+    "claimCta": "Claim 600 Coins Now",
+    "gamesTitle": "Pick a game"
+  },
+  "wheel": {
+    "segments": [
+      { "id": "coins_100", "label": "100", "value": 100 },
+      { "id": "coins_250", "label": "250", "value": 250 },
+      { "id": "coins_600", "label": "600", "value": 600 },
+      { "id": "coins_50", "label": "50", "value": 50 },
+      { "id": "coins_500", "label": "500", "value": 500 },
+      { "id": "coins_300", "label": "300", "value": 300 }
+    ]
+  },
+  "prizes": [
+    {
+      "id": "coins_600",
+      "title": "600 COINS UNLOCKED",
+      "subtitle": "Enter your email to claim your welcome balance.",
+      "ctaUrl": "#"
+    }
+  ],
+  "games": [
+    { "id": "slots", "name": "Slots", "image": "assets/games/slots.webp" },
+    { "id": "roulette", "name": "Roulette", "image": "assets/games/roulette.webp" },
+    { "id": "blackjack", "name": "Blackjack", "image": "assets/games/blackjack.webp" },
+    { "id": "poker", "name": "Poker", "image": "assets/games/poker.webp" },
+    { "id": "craps", "name": "Craps", "image": "assets/games/craps.webp" },
+    { "id": "baccarat", "name": "Baccarat", "image": "assets/games/baccarat.webp" }
+  ]
+}

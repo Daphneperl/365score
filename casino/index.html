@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Spin to claim your 365Scores welcome coin package."
+    />
+    <title>365Scores — Casino Welcome Offer</title>
+    <link
+      rel="preload"
+      href="data/casino-config.json"
+      as="fetch"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://res.365scores.com" crossorigin />
+    <link rel="stylesheet" href="css/casino.css?v=23" />
+  </head>
+  <body>
+    <div id="claimModal" class="claim-modal" hidden>
+      <div
+        class="claim-modal-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="prizeTitle"
+      >
+        <img
+          class="prize-coins"
+          src="assets/coins.png"
+          alt=""
+          width="160"
+          height="160"
+          decoding="async"
+        />
+        <h2 class="prize-title" id="prizeTitle"></h2>
+        <p class="prize-subtitle" id="prizeSubtitle"></p>
+
+        <label class="email-field" for="emailInput">
+          <span class="email-label" id="emailLabel"></span>
+          <input
+            type="email"
+            id="emailInput"
+            name="email"
+            autocomplete="off"
+            inputmode="email"
+            spellcheck="false"
+          />
+        </label>
+
+        <button
+          type="button"
+          class="btn-primary"
+          id="claimBtn"
+          disabled
+        ></button>
+      </div>
+    </div>
+
+    <div id="pageFade" class="page-fade" aria-hidden="true"></div>
+
+    <header class="brand-header">
+      <span class="brand">365<span class="accent">CASINO</span></span>
+      <div id="headerBalance" class="header-balance" hidden>
+        <img
+          class="header-balance-icon"
+          src="assets/coins.png"
+          alt=""
+          width="28"
+          height="28"
+          decoding="async"
+        />
+        <span id="headerBalanceValue">600</span>
+      </div>
+    </header>
+
+    <div id="app">
+      <main id="main">
+        <section id="wheelStage" class="wheel-stage">
+          <h1 id="headline"></h1>
+          <fieldset
+            class="ui-wheel-of-fortune"
+            id="wheelOfFortune"
+            style="--_items: 6"
+          >
+            <ul id="wheel" aria-hidden="true"></ul>
+            <button type="button" id="spinBtn"></button>
+          </fieldset>
+          <p id="subheadline"></p>
+        </section>
+
+        <section id="gamesMenu" class="games-menu" hidden>
+          <h2 id="gamesTitle" class="games-title"></h2>
+          <div id="gamesGrid" class="games-grid"></div>
+        </section>
+      </main>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"
+      defer
+    ></script>
+    <script src="js/casino.js?v=11" defer></script>
+  </body>
+</html>
